@@ -36,25 +36,23 @@ public class VarcharLengthCheckInterceptor implements Interceptor {
 				MappedStatement ms = (MappedStatement) invocation.getArgs()[0];
 				Object parameterObject = invocation.getArgs()[1];
 				BoundSql boundSql = ms.getBoundSql(parameterObject);
-				String sql = boundSql.getSql().trim().toLowerCase();
 				
-				// 只分析 INSERT（你也可以扩展到 UPDATE）
-				if (sql.startsWith("insert")) {
-					try (Connection conn = ms.getConfiguration()
-											 .getEnvironment()
-											 .getDataSource()
-											 .getConnection()) {
-						
-						SqlInfo sqlInfo = parseInsertSql(boundSql.getSql());
-						if (sqlInfo != null) {
-							Map<String, Integer> varcharLimitMap = loadColumnMaxLength(conn, sqlInfo);
-							// 这里会根据列名 + 参数值，推算哪个字段超长并抛出更友好的异常
-							checkParametersAndThrow(boundSql, sqlInfo, varcharLimitMap);
-						}
-					} catch (Exception ignore) {
-						throw ignore;
-						// 如果分析失败，就不要拦截原始异常
+				// String sql = boundSql.getSql().trim().toLowerCase(); // 只分析 INSERT（你也可以扩展到 UPDATE）
+				
+				try (Connection conn = ms.getConfiguration()
+										 .getEnvironment()
+										 .getDataSource()
+										 .getConnection()) {
+					
+					SqlInfo sqlInfo = parseInsertSql(boundSql.getSql());
+					if (sqlInfo != null) {
+						Map<String, Integer> varcharLimitMap = loadColumnMaxLength(conn, sqlInfo);
+						// 这里会根据列名 + 参数值，推算哪个字段超长并抛出更友好的异常
+						checkParametersAndThrow(boundSql, sqlInfo, varcharLimitMap);
 					}
+				} catch (Exception ignore) {
+					throw ignore;
+					// 如果分析失败，就不要拦截原始异常
 				}
 			}
 			// 分析不了或者不是这个错误，就把原始异常抛出去
@@ -91,7 +89,9 @@ public class VarcharLengthCheckInterceptor implements Interceptor {
 		try {
 			String lower = sql.toLowerCase();
 			int intoIdx = lower.indexOf("into");
-			if (intoIdx < 0) return null;
+			if (intoIdx < 0) {
+				return parseUpdateSql(sql);
+			}
 			
 			int leftParenIdx = sql.indexOf("(", intoIdx);
 			int rightParenIdx = sql.indexOf(")", leftParenIdx);
@@ -123,6 +123,53 @@ public class VarcharLengthCheckInterceptor implements Interceptor {
 			return null;
 		}
 	}
+	
+	private SqlInfo parseUpdateSql(String sql) {
+		try {
+			String lower = sql.toLowerCase();
+			int updateIdx = lower.indexOf("update");
+			int setIdx = lower.indexOf("set");
+			
+			if (updateIdx < 0 || setIdx < 0) return null;
+			
+			// 表名
+			String fullTable = sql.substring(updateIdx + 6, setIdx).trim();
+			fullTable = fullTable.replace("\"", "").replace("`", "");
+			
+			SqlInfo info = new SqlInfo();
+			int dotIdx = fullTable.indexOf(".");
+			if (dotIdx > 0 && dotIdx < fullTable.length() - 1) {
+				info.schema = fullTable.substring(0, dotIdx).trim();
+				info.tableName = fullTable.substring(dotIdx + 1).trim();
+			} else {
+				info.tableName = fullTable.trim();
+			}
+			
+			// 截取 SET ... 和 WHERE 之间的部分
+			int whereIdx = lower.indexOf("where");
+			String setPart = (whereIdx > 0)
+							 ? sql.substring(setIdx + 3, whereIdx)
+							 : sql.substring(setIdx + 3);
+			
+			// 解析字段名称
+			String[] assigns = setPart.split(",");
+			List<String> columns = new ArrayList<>();
+			for (String assign : assigns) {
+				String[] kv = assign.split("=");
+				if (kv.length > 0) {
+					String col = kv[0].trim().replace("`", "").replace("\"", "");
+					if (!col.isEmpty()) columns.add(col);
+				}
+			}
+			info.columns = columns;
+			
+			return info;
+			
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 	
 	/* ================= 读取表字段长度 ================= */
 	
@@ -184,10 +231,8 @@ public class VarcharLengthCheckInterceptor implements Interceptor {
 				String str = (String) val;
 				if (str.length() > maxLen) {
 					// 到这里就是你想要的：报错之后再算出字段 + 长度
-					throw new RuntimeException(
-						"Column [" + column + "] value too long. actual length = "
-						+ str.length() + ", max = " + maxLen
-					);
+					String error = String.format("Column [%s] value too long.actual:[%s] actual length = %d, max = %d", column, str, str.length(), maxLen);
+					throw new RuntimeException(error);
 				}
 			}
 		}

@@ -5,8 +5,8 @@
 
 package tech.ynfy.frame.config.feign;
 
-import com.mylike.frame.config.exception.BizException;
-import com.mylike.frame.module.Result;
+import tech.ynfy.frame.config.exception.BizException;
+import tech.ynfy.frame.module.Result;
 import feign.codec.Decoder;
 import feign.optionals.OptionalDecoder;
 import org.springframework.beans.factory.ObjectProvider;

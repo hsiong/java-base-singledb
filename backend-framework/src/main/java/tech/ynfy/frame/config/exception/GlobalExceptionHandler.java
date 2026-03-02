@@ -43,11 +43,21 @@ public class GlobalExceptionHandler {
 	}
 	
 	/**
-	 * 基础异常
+	 * base exception
 	 */
 	@ExceptionHandler(Exception.class)
 	public Result baseException(Exception e) {
 		log.error(e.getMessage(), e);
 		return Result.error(String.format("系统异常-请联系管理员：%s", e.getMessage()));
 	}
+	
+	/**
+	 * business exception
+	 */
+	@ExceptionHandler(BizException.class)
+	public Result customBizException(BizException e) {
+		log.error(e.getMessage(), e);
+		return Result.error(e.getCode(), String.format("%s", e.getMessage()));
+	}
+	
 }

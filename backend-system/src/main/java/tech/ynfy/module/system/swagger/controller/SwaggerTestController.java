@@ -4,12 +4,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.websocket.server.PathParam;
 import org.springframework.web.bind.annotation.*;
 import tech.ynfy.module.system.swagger.model.PostSwaggerDTO;
 import tech.ynfy.module.system.swagger.model.PostSwaggerVO;
 
 import jakarta.validation.constraints.NotNull;
-import javax.websocket.server.PathParam;
 
 /**
  * 〈〉

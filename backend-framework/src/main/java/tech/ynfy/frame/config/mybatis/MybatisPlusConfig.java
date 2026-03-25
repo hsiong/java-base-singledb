@@ -14,7 +14,6 @@ public class MybatisPlusConfig {
 	/**
 	 * MybatisPlus拦截器配置
 	 * 包含：分页插件、乐观锁插件、MPJ连表插件
-	 * 支持多数据源：Oracle（主）和 PostgreSQL（次）
 	 *
 	 * @return
 	 */

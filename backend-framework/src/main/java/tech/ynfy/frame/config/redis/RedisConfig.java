@@ -22,6 +22,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import tech.ynfy.frame.constant.RedisConstant;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 import static java.util.Collections.singletonMap;
 
@@ -71,23 +73,23 @@ public class RedisConfig extends CachingConfigurerSupport {
 		// 配置序列化（缓存默认有效期 6小时）
 		// 加入 redis 前缀, 避免缓存冲突
 		RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
+																.disableCachingNullValues()
 																.entryTtl(Duration.ofHours(6))
 																.computePrefixWith(cacheName -> redisPrefix + cacheName + ":");
-		;
+		
 		RedisCacheConfiguration redisCacheConfiguration =
 			config.serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new RedisKeySerializer()))
 				  .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(getRedisJsonSerializer()));
 		// 创建默认缓存配置对象
 		/* 自定义配置test:demo 的超时时间为 5分钟*/
-		RedisCacheManager cacheManager =
-			RedisCacheManager.builder(RedisCacheWriter.lockingRedisCacheWriter(lettuceConnectionFactory))
-							 .cacheDefaults(redisCacheConfiguration)
-							 .withInitialCacheConfigurations(singletonMap(RedisConstant.TEST_DEMO_CACHE,
-																		  RedisCacheConfiguration.defaultCacheConfig()
-																								 .entryTtl(Duration.ofMinutes(5))
-																								 .disableCachingNullValues()))
-							 .transactionAware()
-							 .build();
+		Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
+		configMap.put("test:demo", RedisCacheConfiguration.defaultCacheConfig().disableCachingNullValues().entryTtl(Duration.ofMinutes(5)));
+		
+		RedisCacheManager cacheManager = RedisCacheManager.builder(RedisCacheWriter.lockingRedisCacheWriter(lettuceConnectionFactory))
+														  .cacheDefaults(redisCacheConfiguration)
+														  .withInitialCacheConfigurations(configMap)
+														  .transactionAware()
+														  .build();
 		return cacheManager;
 	}
 	

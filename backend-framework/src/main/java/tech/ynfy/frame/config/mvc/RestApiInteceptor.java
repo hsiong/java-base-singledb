@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tech.ynfy.frame.config.auth;
+package tech.ynfy.frame.config.mvc;
 
 
 import cn.hutool.core.util.ObjectUtil;
@@ -62,10 +62,10 @@ public class RestApiInteceptor implements HandlerInterceptor {
         Method method = handlerMethod.getMethod();
         // 有 @Pass 注解，不需要认证
         Pass methodAnnotation = method.getAnnotation(Pass.class);
-        //        if (methodAnnotation != null) { // 改为 无需认证
+        //        if (methodAnnotation != null) { 
         //            return true;
         //        }
-        if (methodAnnotation == null) {
+        if (methodAnnotation == null) { // 改为 无需认证
             return true;
         }
         

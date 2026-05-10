@@ -19,7 +19,6 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import tech.ynfy.frame.config.auth.RestApiInteceptor;
 import tech.ynfy.frame.config.repeat.RepeatSubmitInterceptor;
 
 import java.nio.charset.StandardCharsets;

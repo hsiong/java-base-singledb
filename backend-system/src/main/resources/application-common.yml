@@ -33,18 +33,10 @@ spring:
     ## 多数据源配置 (使用dynamic-datasource)
     dynamic:
       # 设置默认的数据源或者数据源组,默认值即为master
-      primary: oracle
+      primary: postgres
       # 严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
       strict: false
       datasource:
-        # Oracle主数据源 (CRM等业务数据)
-        oracle:
-          driver-class-name: oracle.jdbc.OracleDriver
-          url: jdbc:oracle:thin:@//${config.datasource.oracle.url}:${config.datasource.oracle.port}/${config.datasource.oracle.serviceName}
-          username: ${config.datasource.oracle.username}
-          password: ${config.datasource.oracle.password}
-          hikari:
-            connection-init-sql: ALTER SESSION SET CURRENT_SCHEMA=${config.datasource.oracle.schema}
         # PostgreSQL次数据源 (Customer 360 档案数据)
         postgres:
           driver-class-name: org.postgresql.Driver
@@ -94,7 +86,7 @@ mybatis-plus:
     banner: false
     db-config:
       # 数据库类型
-      db-type: oracle
+      db-type: postgres
       #主键类型  0:"数据库ID自增",1:"该类型为未设置主键类型", 2:"用户输入ID",3:"全局唯一ID (数字类型唯一ID)", 4:"全局唯一ID UUID",5:"字符串全局唯一ID (idWorker 的字符串表示)";
       id-type: ASSIGN_ID
       # 默认数据库表下划线命名

@@ -51,7 +51,7 @@ public class SysAuthServiceImpl implements SysAuthService {
         vo.setToken(token);
         return vo;
     }
-
+    
     @Override
     public void logout(HttpServletRequest request) {
         String userId = null;

@@ -6,7 +6,7 @@ set -eu
 # ====== 可按需修改 ======
 IMAGE_NAME="java-base"          # 镜像名
 CONTAINER_NAME="java-base"      # 容器名
-APP_JAR_NAME="backend-system/target/backend-system-1.0.0-SNAPSHOT.jar"
+APP_JAR_NAME="$IMAGE_NAME/target/$IMAGE_NAME-1.0.0-SNAPSHOT.jar"
 HOST_PORT="8000"            # 宿主机端口
 CONTAINER_PORT="8000"       # 容器端口（Dockerfile EXPOSE 的）
 PROXY_URL="" # 代理
@@ -59,3 +59,5 @@ WORKER_RUN_CMD="docker run -d \
   ${IMAGE_NAME}"
 eval ${WORKER_RUN_CMD}
 echo ">>> ${CONTAINER_NAME} 已启动。"
+
+docker logs -f ${IMAGE_NAME}

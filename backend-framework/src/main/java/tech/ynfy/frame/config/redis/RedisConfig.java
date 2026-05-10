@@ -50,7 +50,6 @@ public class RedisConfig extends CachingConfigurerSupport {
 	public RedisTemplate redisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
 		RedisTemplate template = new RedisTemplate<>();
 		template.setConnectionFactory(lettuceConnectionFactory);
-		template.setKeySerializer(new RedisKeySerializer());
 		template.setValueSerializer(getRedisJsonSerializer());
 		// 使用StringRedisSerializer来序列化和反序列化redis的key值
 		template.setKeySerializer(new StringRedisSerializer());
@@ -75,16 +74,21 @@ public class RedisConfig extends CachingConfigurerSupport {
 		RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
 																.disableCachingNullValues()
 																.entryTtl(Duration.ofHours(6))
-																.computePrefixWith(cacheName -> redisPrefix + cacheName + ":");
+																.computePrefixWith(cacheName -> redisPrefix + "::" + cacheName + "::");
 		
 		RedisCacheConfiguration redisCacheConfiguration =
-			config.serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new RedisKeySerializer()))
-				  .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(getRedisJsonSerializer()));
+			config.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(getRedisJsonSerializer()));
+		
+		RedisCacheConfiguration allowNullRedisCacheConfiguration =
+			RedisCacheConfiguration.defaultCacheConfig()
+								   .entryTtl(Duration.ofHours(6))
+								   .computePrefixWith(cacheName -> redisPrefix + "::" + cacheName + "::")
+								   .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(getRedisJsonSerializer()));
 		// 创建默认缓存配置对象
 		/* 自定义配置test:demo 的超时时间为 5分钟*/
 		Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
-		configMap.put("test:demo", RedisCacheConfiguration.defaultCacheConfig().disableCachingNullValues().entryTtl(Duration.ofMinutes(5)));
-		
+		configMap.put("test:demo", allowNullRedisCacheConfiguration.entryTtl(Duration.ofDays(7)));
+
 		RedisCacheManager cacheManager = RedisCacheManager.builder(RedisCacheWriter.lockingRedisCacheWriter(lettuceConnectionFactory))
 														  .cacheDefaults(redisCacheConfiguration)
 														  .withInitialCacheConfigurations(configMap)

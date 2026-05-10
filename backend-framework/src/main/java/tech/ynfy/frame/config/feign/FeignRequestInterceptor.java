@@ -15,8 +15,8 @@ public class FeignRequestInterceptor implements RequestInterceptor {
 	@Override
 	public void apply(RequestTemplate requestTemplate) {
 		
-		requestTemplate.header("Authorization", "auth"); // 加入自定义 Header
-		requestTemplate.query("sign", "sign");
+//		requestTemplate.header("Authorization", "auth"); // 加入自定义 Header
+//		requestTemplate.query("sign", "sign");
 		
 		/**
 		 *  load balancer 调用需要取消注释， 

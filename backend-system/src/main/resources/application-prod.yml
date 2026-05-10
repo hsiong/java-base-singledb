@@ -1,4 +1,5 @@
 config:
+  port: 8000
   # 是否开启 swagger
   swaggerEnabled: true
   # 本地文件路径
@@ -14,13 +15,6 @@ config:
     # 端口，默认为6379
     port: 6379
   datasource:
-    oracle:
-      password: oracle
-      url: localhost
-      port: 1521
-      username: oracle
-      serviceName: ORCL
-      schema: test
     # PostgreSQL数据源配置
     postgres:
       url: localhost

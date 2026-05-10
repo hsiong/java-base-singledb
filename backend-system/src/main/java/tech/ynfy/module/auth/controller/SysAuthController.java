@@ -1,4 +1,4 @@
-package tech.ynfy.controller;
+package tech.ynfy.module.auth.controller;
 
 
 import io.swagger.v3.oas.annotations.Operation;

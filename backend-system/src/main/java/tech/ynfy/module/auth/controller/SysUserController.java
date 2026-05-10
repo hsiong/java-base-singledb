@@ -1,4 +1,4 @@
-package tech.ynfy.controller;
+package tech.ynfy.module.auth.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;

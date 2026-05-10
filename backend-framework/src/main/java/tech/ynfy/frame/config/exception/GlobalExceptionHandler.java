@@ -2,6 +2,7 @@ package tech.ynfy.frame.config.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -58,6 +59,18 @@ public class GlobalExceptionHandler {
 	public Result customBizException(BizException e) {
 		log.error(e.getMessage(), e);
 		return Result.error(e.getCode(), String.format("%s", e.getMessage()));
+	}
+	
+	@Value("${server.servlet.context-path}")
+	private String servicePrefix;
+	
+	/**
+	 * business exception
+	 */
+	@ExceptionHandler(RedisLockException.class)
+	public Result customBizException(RedisLockException e) {
+		log.error(e.getMessage(), e);
+		return Result.error(e.getCode(), String.format("%s %s",servicePrefix, e.getMessage()));
 	}
 	
 }

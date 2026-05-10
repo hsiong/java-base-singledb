@@ -7,6 +7,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
@@ -23,6 +24,7 @@ import java.net.UnknownHostException;
 @Import(DynamicDataSourceAutoConfiguration.class) // 手动强行导入
 @Slf4j
 @MapperScan(value={"tech.ynfy.module.**.mapper"})
+@EnableFeignClients // 开启feign
 public class RunApplication {
     
     public static void main(String[] args) throws UnknownHostException {

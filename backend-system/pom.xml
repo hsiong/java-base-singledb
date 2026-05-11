@@ -3,22 +3,25 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>base-backend</artifactId>
-        <groupId>tech.ynfy</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.4.10</version>
+        <relativePath/>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
+    <groupId>tech.ynfy</groupId>
+    <packaging>jar</packaging>
+    <version>1.0.0-SNAPSHOT</version>
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>backend-system</artifactId>
     <description>业务模块</description>
 
+    <properties>
+        <commons-codec.version>1.15</commons-codec.version>
+
+    </properties>
+
     <dependencies>
-
-        <dependency>
-            <groupId>tech.ynfy</groupId>
-            <artifactId>backend-framework</artifactId>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
         <dependency>
             <groupId>commons-codec</groupId>
@@ -26,6 +29,24 @@
             <version>${commons-codec.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>tech.ynfy</groupId>
+            <artifactId>backend-framework</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+        
     </dependencies>
 
 

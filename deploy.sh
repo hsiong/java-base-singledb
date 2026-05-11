@@ -12,6 +12,8 @@ CONTAINER_PORT="8000"       # 容器端口（Dockerfile EXPOSE 的）
 PROXY_URL="" # 代理
 CONTAINER_LOG_PATH="/home/hsiong/code/config/log/${CONTAINER_NAME}/prod"
 
+cd ${IMAGE_NAME}
+
 # ======================== proxy
 echo "==> [0/5] 设置代理 ${PROXY_URL}"
 BUILD_ARGS="-t ${IMAGE_NAME} \

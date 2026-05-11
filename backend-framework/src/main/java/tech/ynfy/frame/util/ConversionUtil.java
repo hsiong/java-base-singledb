@@ -1,4 +1,4 @@
-package tech.ynfy.common.util;
+package tech.ynfy.frame.util;
 
 import org.apache.commons.lang3.StringUtils;
 

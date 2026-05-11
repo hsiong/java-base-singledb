@@ -12,7 +12,6 @@ import tech.ynfy.frame.util.RedisUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 
-import static tech.ynfy.frame.constant.RedisConstant.*;
 
 /**
  * 判断请求url和数据是否和上一次相同，
@@ -25,6 +24,21 @@ public class RepeatSubmitUrlDataInterceptor extends RepeatSubmitInterceptor {
     
     @Autowired
     private RedisUtil redisUtil;
+    
+    /**
+     * 防重提交 redis key
+     */
+    String REPEAT_SUBMIT_KEY = "repeat_submit:";
+    
+    /**
+     * 重复时间
+     */
+    Integer REPEAT_TIME_SECOND = 10;
+    
+    /**
+     * 重复时间 - Mills
+     */
+    Integer REPEAT_TIME_MILL = REPEAT_TIME_SECOND * 1000;
 
     /**
      * 间隔时间，单位:秒 默认10秒
@@ -34,6 +48,7 @@ public class RepeatSubmitUrlDataInterceptor extends RepeatSubmitInterceptor {
     @SuppressWarnings("unchecked")
     @Override
     public boolean isRepeatSubmit(HttpServletRequest request) {
+        // 需使用 RepeatSubmit annotation = method.getAnnotation(RepeatSubmit.class);
         String nowParams = "";
         if (request instanceof RepeatedlyRequestWrapper) {
             RepeatedlyRequestWrapper repeatedlyRequest = (RepeatedlyRequestWrapper) request;

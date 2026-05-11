@@ -14,6 +14,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
+import tech.ynfy.frame.config.exception.RedisLockException;
 import tech.ynfy.frame.util.MD5Utils;
 import tech.ynfy.frame.util.SpElUtil;
 
@@ -219,6 +220,7 @@ public class RedisLockAspect {
 		return sb.toString();
 	}
 	
+	
 	/**
 	 * 统一构建“太频繁 / 加锁失败”异常
 	 * 你可以换成你自己的业务异常类型
@@ -228,6 +230,6 @@ public class RedisLockAspect {
 			redissonLock.message(),
 			"请求太频繁了，请稍后再试!"
 		);
-		return new RuntimeException(msg);
+		return new RedisLockException(500, msg);
 	}
 }

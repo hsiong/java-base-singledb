@@ -17,9 +17,7 @@ package tech.ynfy.frame.config.mvc;
 
 
 import cn.hutool.core.util.ObjectUtil;
-import tech.ynfy.common.annotation.Pass;
-import tech.ynfy.common.constant.JwtConstants;
-import tech.ynfy.common.constant.RedisConstant;
+import tech.ynfy.frame.constant.JwtConstants;
 import tech.ynfy.frame.module.Result;
 import tech.ynfy.frame.util.RenderUtil;
 import tech.ynfy.frame.util.SpringUtil;
@@ -60,12 +58,12 @@ public class RestApiInteceptor implements HandlerInterceptor {
         // ①:START 方法注解级拦截器
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
-        // 有 @Pass 注解，不需要认证
-        Pass methodAnnotation = method.getAnnotation(Pass.class);
+        // 有 @Check 注解，需要认证
+        Check methodAnnotation = method.getAnnotation(Check.class);
         //        if (methodAnnotation != null) { 
         //            return true;
         //        }
-        if (methodAnnotation == null) { // 改为 无需认证
+        if (methodAnnotation == null) {
             return true;
         }
         
@@ -89,7 +87,7 @@ public class RestApiInteceptor implements HandlerInterceptor {
                 // jwt 验证
                 String userId = JwtTokenUtil.getUsernameFromToken(authToken);
                 // redis 二次验证
-                Object object = redisUtil.hget(RedisConstant.USER_KEY, userId);
+                Object object = redisUtil.hget("system:user_key", userId);
                 if (ObjectUtil.isEmpty(object) ||
                     !authToken.equals(object.toString())) {//过期：redis中不存在过期或者不相等
                     RenderUtil.renderJson(response, Result.authExpire());

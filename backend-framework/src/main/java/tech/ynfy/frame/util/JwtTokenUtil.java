@@ -2,7 +2,7 @@
 package tech.ynfy.frame.util;
 
 
-import tech.ynfy.common.constant.JwtConstants;
+import tech.ynfy.frame.constant.JwtConstants;
 import io.jsonwebtoken.*;
 import org.apache.commons.lang3.StringUtils;
 

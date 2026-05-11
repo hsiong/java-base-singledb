@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tech.ynfy.common.annotation;
+package tech.ynfy.frame.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

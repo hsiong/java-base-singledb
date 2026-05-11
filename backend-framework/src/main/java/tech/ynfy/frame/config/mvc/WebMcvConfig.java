@@ -36,12 +36,15 @@ public class WebMcvConfig implements WebMvcConfigurer {
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
     
     // /api/**
-    @Value("${ynfy.path.accessPath}")
+    @Value("${project-config.path.accessPath}")
     private String accessPath;
     
     // file:绝对路径, file:绝对路径
-    @Value("${ynfy.path.localPath}")
+    @Value("${project-config.path.localPath}")
     private String localPath;
+    
+    @Value("${project-config.path.externalPath}")
+    private String externalPath;
     
     @Value("${springdoc.api-docs.path}")
     private String openApiPath;
@@ -64,7 +67,7 @@ public class WebMcvConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/doc.html",
                                      openApiPath + "/**",
-                                     "/icbc/client/**"
+                                     externalPath
                 );
     }
     

@@ -152,8 +152,8 @@ public class RedisUtil {
 	 * 递增
 	 *
 	 * @param key 键
-	 * @param by  要增加几(大于0)
-	 * @return
+	 * @param delta 要增加的数值，必须大于等于 0
+	 * @return 递增后的值
 	 */
 	public long incr(String key, long delta) {
 		if (delta < 0) {
@@ -166,8 +166,8 @@ public class RedisUtil {
 	 * 递减
 	 *
 	 * @param key 键
-	 * @param by  要减少几(小于0)
-	 * @return
+	 * @param delta 要减少的数值，必须大于等于 0
+	 * @return 递减后的值
 	 */
 	public long decr(String key, long delta) {
 		if (delta < 0) {
@@ -459,8 +459,8 @@ public class RedisUtil {
 	 * 通过索引 获取list中的值
 	 *
 	 * @param key   键
-	 * @param index 索引 index>=0时， 0 表头，1 第二个元素，依次类推；index<0时，-1，表尾，-2倒数第二个元素，依次类推
-	 * @return
+	 * @param index 索引，大于等于 0 时从表头开始，小于 0 时从表尾开始
+	 * @return 索引对应的缓存值
 	 */
 	public Object lGetIndex(String key, long index) {
 		try {
@@ -476,8 +476,7 @@ public class RedisUtil {
 	 *
 	 * @param key   键
 	 * @param value 值
-	 * @param time  时间(秒)
-	 * @return
+	 * @return true 成功 false 失败
 	 */
 	public boolean lSet(String key, Object value) {
 		try {
@@ -495,7 +494,7 @@ public class RedisUtil {
 	 * @param key   键
 	 * @param value 值
 	 * @param time  时间(秒)
-	 * @return
+	 * @return true 成功 false 失败
 	 */
 	public boolean lSet(String key, Object value, long time) {
 		try {
@@ -515,8 +514,7 @@ public class RedisUtil {
 	 *
 	 * @param key   键
 	 * @param value 值
-	 * @param time  时间(秒)
-	 * @return
+	 * @return true 成功 false 失败
 	 */
 	public boolean lSet(String key, List<Object> value) {
 		try {
@@ -534,7 +532,7 @@ public class RedisUtil {
 	 * @param key   键
 	 * @param value 值
 	 * @param time  时间(秒)
-	 * @return
+	 * @return true 成功 false 失败
 	 */
 	public boolean lSet(String key, List<Object> value, long time) {
 		try {
@@ -590,7 +588,6 @@ public class RedisUtil {
 	 *
 	 * @param channel 订阅通道
 	 * @param value 值
-	 * @return
 	 */
 	public void convertAndSend(String channel, Object value) {
 		try {

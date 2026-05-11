@@ -1,4 +1,4 @@
-package tech.ynfy.common.constant;
+package tech.ynfy.config.thread;
 
 /**
  * 〈〉

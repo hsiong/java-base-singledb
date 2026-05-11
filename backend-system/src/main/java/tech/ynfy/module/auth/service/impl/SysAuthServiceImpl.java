@@ -2,8 +2,8 @@ package tech.ynfy.module.auth.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
-import tech.ynfy.common.constant.JwtConstants;
-import tech.ynfy.common.constant.RedisConstant;
+import tech.ynfy.frame.constant.JwtConstants;
+import tech.ynfy.config.redis.RedisConstant;
 import tech.ynfy.frame.util.JwtTokenUtil;
 import tech.ynfy.frame.util.RedisUtil;
 import tech.ynfy.module.auth.bean.SysUserAuthVO;

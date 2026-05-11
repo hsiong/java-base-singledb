@@ -29,20 +29,20 @@ spring:
       max-file-size: 10MB
       # 文件上传设置总上传的文件大小
       max-request-size: 20MB
-  datasource:
-    ## 多数据源配置 (使用dynamic-datasource)
-    dynamic:
-      # 设置默认的数据源或者数据源组,默认值即为master
-      primary: postgres
-      # 严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
-      strict: false
-      datasource:
-        # PostgreSQL次数据源 (Customer 360 档案数据)
-        postgres:
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://${config.datasource.postgres.url}:${config.datasource.postgres.port}/${config.datasource.postgres.database}
-          username: ${config.datasource.postgres.username}
-          password: ${config.datasource.postgres.password}
+#  datasource:
+#    ## 多数据源配置 (使用dynamic-datasource)
+#    dynamic:
+#      # 设置默认的数据源或者数据源组,默认值即为master
+#      primary: postgres
+#      # 严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+#      strict: false
+#      datasource:
+#        # PostgreSQL次数据源 (Customer 360 档案数据)
+#        postgres:
+#          driver-class-name: org.postgresql.Driver
+#          url: jdbc:postgresql://${config.datasource.postgres.url}:${config.datasource.postgres.port}/${config.datasource.postgres.database}
+#          username: ${config.datasource.postgres.username}
+#          password: ${config.datasource.postgres.password}
   # redis 配置: 用的是 Spring Data Redis 3.4.10（对应 Spring Boot 3.4.x 体系），应使用 spring.data.redis.*
   data:
     redis:
@@ -75,7 +75,7 @@ spring:
 #      autoconfigure:
 #        cache:
 #          RedisCacheConfiguration:
-#            AutoConfigureAfter: tech.ynfy.frame.config.redis.RedisConfig
+#            AutoConfigureAfter: tech.ynfy.module.redis.RedisConfig
 #            
 
 #mybatis plus 设置
@@ -105,11 +105,12 @@ xss:
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
 
-ynfy:
+project-config:
   path:
     # 文件访问api
     accessPath: /api/**
     localPath: ${config.swaggerEnabled}
+    externalPath: "/icbc/client/**"
   thread:
     # 核心线程池大小
     corePoolSize: 10
@@ -136,3 +137,5 @@ springdoc:
     license: Apache 2.0
     url: http://springdoc.org
 
+feign:
+  test-url: http://localhost

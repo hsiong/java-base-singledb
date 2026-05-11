@@ -18,7 +18,7 @@ import tech.ynfy.frame.config.feign.FeignResponseDecoder;
  */
 @FeignClient(
 	name = "ai",
-	url = "${ai.baseUrl}",                    // 配置文件里定义 baseUrl
+	url = "${feign.test-url}",                    // 配置文件里定义 baseUrl
 	configuration = {
 		FeignConfiguration.class,
 		FeignResponseDecoder.class

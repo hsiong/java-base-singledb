@@ -4,7 +4,7 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 config:
-  port: 7000
+  port: 6000
   # 是否开启 swagger
   swaggerEnabled: true
   # 本地文件路径

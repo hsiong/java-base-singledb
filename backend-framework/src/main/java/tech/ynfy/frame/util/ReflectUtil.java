@@ -8,12 +8,12 @@
  * <author>          <time>          <version>          <desc>
  * 作者姓名           修改时间           版本号              描述
  */
-package tech.ynfy.common.util;
+package tech.ynfy.frame.util;
 
 
 import cn.hutool.core.util.ObjectUtil;
-import tech.ynfy.common.annotation.SqlUtilProperty;
-import tech.ynfy.common.module.SqlResultBO;
+import tech.ynfy.frame.annotation.SqlUtilProperty;
+import tech.ynfy.frame.module.SqlResultBO;
 
 import java.lang.reflect.Field;
 

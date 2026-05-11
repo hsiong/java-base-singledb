@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tech.ynfy.common.annotation.Pass;
+import tech.ynfy.frame.config.mvc.Check;
 import tech.ynfy.frame.module.Result;
 import tech.ynfy.module.auth.bean.SysUserAuthVO;
 import tech.ynfy.module.auth.service.SysAuthService;
@@ -34,7 +34,7 @@ public class SysAuthController {
 
     @Operation(summary = "登录")
     @PostMapping("/login")
-    @Pass
+    @Check
     public Result<SysUserAuthVO> login(@Valid @RequestBody SysUserSaveDTO dto) {
         SysUserAuthVO vo = authService.login(dto);
         return Result.ok(vo);

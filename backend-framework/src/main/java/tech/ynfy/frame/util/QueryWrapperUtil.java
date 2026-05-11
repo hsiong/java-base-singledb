@@ -3,7 +3,7 @@ package tech.ynfy.frame.util;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import tech.ynfy.common.annotation.SqlUtilProperty;
+import tech.ynfy.frame.annotation.SqlUtilProperty;
 
 import java.lang.reflect.Field;
 import java.util.Collection;

@@ -31,14 +31,14 @@ public @interface RedisLock {
 	String[] key() default {};
 	
 	/**
-	 * 获取锁最大等待时间，<=0 表示不等待，直接 tryLock()
+	 * 获取锁最大等待时间，小于等于 0 表示不等待，直接 tryLock()
 	 */
 	long waitTime() default 5L;
 	
 	TimeUnit waitUnit() default TimeUnit.SECONDS;
 	
 	/**
-	 * 锁自动释放时间，<=0 表示使用 Redisson 默认看门狗
+	 * 锁自动释放时间，小于等于 0 表示使用 Redisson 默认看门狗
 	 */
 	long leaseTime() default -1L;
 	

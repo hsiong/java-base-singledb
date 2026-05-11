@@ -2,7 +2,7 @@ package tech.ynfy.module.user.bean;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import tech.ynfy.common.module.PageBO;
+import tech.ynfy.frame.module.PageBO;
 
 import java.io.Serializable;
 

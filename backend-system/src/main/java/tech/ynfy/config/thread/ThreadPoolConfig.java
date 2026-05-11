@@ -1,16 +1,17 @@
-package tech.ynfy.frame.config.task;
+package tech.ynfy.config.thread;
 
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import tech.ynfy.frame.config.task.ContextCopyingDecorator;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
-import static tech.ynfy.frame.constant.ThreadConstant.*;
+import static tech.ynfy.config.thread.ThreadConstant.*;
 
 /**
  * 线程池配置
@@ -19,19 +20,19 @@ import static tech.ynfy.frame.constant.ThreadConstant.*;
 public class ThreadPoolConfig {
 
     // 核心线程池大小
-    @Value("${ynfy.thread.corePoolSize}")
+    @Value("${project-config.thread.corePoolSize}")
     private Integer corePoolSize;
 
     // 最大可创建的线程数
-    @Value("${ynfy.thread.maxPoolSize}")
+    @Value("${project-config.thread.maxPoolSize}")
     private Integer maxPoolSize;
 
     // 队列最大长度
-    @Value("${ynfy.thread.queueCapacity}")
+    @Value("${project-config.thread.queueCapacity}")
     private Integer queueCapacity;
 
     // 线程池维护线程所允许的空闲时间
-    @Value("${ynfy.thread.keepAliveSeconds}")
+    @Value("${project-config.thread.keepAliveSeconds}")
     private Integer keepAliveSeconds;
 
     @Bean(BASIC_THREAD)

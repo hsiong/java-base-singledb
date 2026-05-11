@@ -1,4 +1,4 @@
-package tech.ynfy.frame.config.exception;
+package tech.ynfy.config.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import tech.ynfy.frame.config.exception.BizException;
+import tech.ynfy.frame.config.exception.RedisLockException;
 import tech.ynfy.frame.module.Result;
 
 import java.util.stream.Collectors;

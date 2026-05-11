@@ -1,4 +1,4 @@
-package tech.ynfy.frame.config.swagger;
+package tech.ynfy.config.swagger;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.models.OpenAPI;

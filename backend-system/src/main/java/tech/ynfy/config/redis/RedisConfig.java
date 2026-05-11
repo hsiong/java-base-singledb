@@ -1,4 +1,4 @@
-package tech.ynfy.frame.config.redis;
+package tech.ynfy.config.redis;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -19,13 +19,11 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import tech.ynfy.frame.constant.RedisConstant;
+import tech.ynfy.frame.config.redis.RedisValueSerializer;
 
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-
-import static java.util.Collections.singletonMap;
 
 /**
  * redis配置
@@ -74,26 +72,36 @@ public class RedisConfig extends CachingConfigurerSupport {
 		RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
 																.disableCachingNullValues()
 																.entryTtl(Duration.ofHours(6))
-																.computePrefixWith(cacheName -> redisPrefix + "::" + cacheName + "::");
+																.computePrefixWith(cacheName -> redisPrefix +
+																								"::" + cacheName +
+																								"::");
 		
 		RedisCacheConfiguration redisCacheConfiguration =
-			config.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(getRedisJsonSerializer()));
+			config.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(
+				getRedisJsonSerializer()));
 		
-		RedisCacheConfiguration allowNullRedisCacheConfiguration =
-			RedisCacheConfiguration.defaultCacheConfig()
-								   .entryTtl(Duration.ofHours(6))
-								   .computePrefixWith(cacheName -> redisPrefix + "::" + cacheName + "::")
-								   .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(getRedisJsonSerializer()));
+		RedisCacheConfiguration allowNullRedisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+																						  .entryTtl(Duration.ofHours(
+																							  6))
+																						  .computePrefixWith(
+																							  cacheName ->
+																								  redisPrefix +
+																								  "::" +
+																								  cacheName + "::")
+																						  .serializeValuesWith(
+																							  RedisSerializationContext.SerializationPair.fromSerializer(
+																								  getRedisJsonSerializer()));
 		// 创建默认缓存配置对象
 		/* 自定义配置test:demo 的超时时间为 5分钟*/
 		Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
 		configMap.put("test:demo", allowNullRedisCacheConfiguration.entryTtl(Duration.ofDays(7)));
-
-		RedisCacheManager cacheManager = RedisCacheManager.builder(RedisCacheWriter.lockingRedisCacheWriter(lettuceConnectionFactory))
-														  .cacheDefaults(redisCacheConfiguration)
-														  .withInitialCacheConfigurations(configMap)
-														  .transactionAware()
-														  .build();
+		
+		RedisCacheManager cacheManager =
+			RedisCacheManager.builder(RedisCacheWriter.lockingRedisCacheWriter(lettuceConnectionFactory))
+							 .cacheDefaults(redisCacheConfiguration)
+							 .withInitialCacheConfigurations(configMap)
+							 .transactionAware()
+							 .build();
 		return cacheManager;
 	}
 	

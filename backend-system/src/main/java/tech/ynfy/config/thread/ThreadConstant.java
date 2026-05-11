@@ -1,4 +1,4 @@
-package tech.ynfy.frame.constant;
+package tech.ynfy.config.thread;
 
 /**
  * 〈〉

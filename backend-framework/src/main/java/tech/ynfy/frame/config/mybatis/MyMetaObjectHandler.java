@@ -24,7 +24,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 	@Override
 	public void updateFill(MetaObject metaObject) {
 		// 更新时自动刷新更新时间, 与 `@TableField(value = "update_at", fill = FieldFill.UPDATE)` 搭配使用
-		this.strictUpdateFill(metaObject, "updateAt", Date.class, new Date());
+		// 强制覆盖
+		this.setFieldValByName("updateAt", new Date(), metaObject);
 	}
 	
 }

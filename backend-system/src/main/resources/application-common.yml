@@ -11,6 +11,13 @@ server:
   tomcat:
     #tomcat的URI编码
     uri-encoding: UTF-8
+    # multi-thread support
+    threads:
+      max: 100
+      min-spare: 10
+    max-connections: 200
+    accept-count: 100
+    connection-timeout: 10s
   # 🔥🔥🔥 添加以下配置来解决响应乱码问题 🔥🔥🔥
   encoding:
     # 强制请求和响应使用 UTF-8
@@ -43,6 +50,14 @@ spring:
 #          url: jdbc:postgresql://${config.datasource.postgres.url}:${config.datasource.postgres.port}/${config.datasource.postgres.database}
 #          username: ${config.datasource.postgres.username}
 #          password: ${config.datasource.postgres.password}
+#          # datasource multi-thread support
+#          hikari:
+#            maximum-pool-size: 300
+#            minimum-idle: 20
+#            connection-timeout: 3000
+#            idle-timeout: 600000
+#            max-lifetime: 1800000
+  
   # redis 配置: 用的是 Spring Data Redis 3.4.10（对应 Spring Boot 3.4.x 体系），应使用 spring.data.redis.*
   data:
     redis:

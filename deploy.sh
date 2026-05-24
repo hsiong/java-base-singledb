@@ -52,10 +52,10 @@ echo "==> [4/5] 运行新容器: ${CONTAINER_NAME}"
 # ls -a 看是否挂载
 WORKER_RUN_CMD="docker run -d \
   --name ${CONTAINER_NAME} \
+  --network=host \
   --restart=always \
   -p ${HOST_PORT}:${CONTAINER_PORT} \
   -v "${CONTAINER_LOG_PATH}:/app/logs" \
-  ${RUN_PROXY_ENV} \
   ${IMAGE_NAME}"
 eval ${WORKER_RUN_CMD}
 echo ">>> ${CONTAINER_NAME} 已启动。"

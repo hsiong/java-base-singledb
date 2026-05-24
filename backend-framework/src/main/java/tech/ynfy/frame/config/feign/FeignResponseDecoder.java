@@ -43,6 +43,15 @@ public class FeignResponseDecoder {
 						return null;
 					}
 				};
+				
+				if (type == String.class) {
+					Result result = (Result) decoder.decode(response, Result.class);
+					if (!result.isSuccess()) {
+						throw new BizException(result.getCode(), result.getMessage());
+					}
+					return result.getMessage();
+				}
+				
 				Result<?> result = (Result) decoder.decode(response, newType);
 				if (!result.isSuccess()) {
 					throw new BizException(result.getCode(), result.getMessage());

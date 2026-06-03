@@ -33,8 +33,7 @@ public class WebLogAspect {
         return value;
     };
     
-    
-    @Pointcut("execution(public * ..module..*.*Controller.*(..))")//两个..代表所有子目录，最后括号里的两个..代表所有参数
+    @Pointcut("execution(public * *..module..*Controller.*(..))")//两个..代表所有子目录，最后括号里的两个..代表所有参数
     public void logPointCut() {
     }
 

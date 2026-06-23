@@ -124,8 +124,8 @@ project-config:
   path:
     # 文件访问api
     accessPath: /api/**
-    localPath: ${config.swaggerEnabled}
-    externalPath: "/icbc/client/**"
+    localPath: ${config.localPath:-}
+    externalPath: "/test/client/**"
   thread:
     # 核心线程池大小
     corePoolSize: 10

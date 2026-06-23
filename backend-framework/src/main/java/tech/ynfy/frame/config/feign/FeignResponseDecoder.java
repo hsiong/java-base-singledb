@@ -49,11 +49,11 @@ public class FeignResponseDecoder {
 					if (!result.isSuccess()) {
 						throw new BizException(result.getCode(), result.getMessage());
 					}
-					return result.getMessage();
+					return result.getResult();
 				}
 				
 				Result<?> result = (Result) decoder.decode(response, newType);
-				if (!result.isSuccess()) {
+				if (!result.isSuccess()) { 
 					throw new BizException(result.getCode(), result.getMessage());
 				}
 				return result.getResult();

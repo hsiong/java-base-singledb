@@ -62,17 +62,10 @@ public class Result<T> implements Serializable {
 		return r;
 	}
 
-	public static <T> Result<T> ok(String msg) {
-		Result<T> r = new Result<T>();
-		r.setSuccess(true);
-		r.setCode(HttpStatus.OK.value());
-		r.setMessage(msg);
-		return r;
-	}
-
 	public static <T> Result<T> ok(T data) {
 		Result<T> r = new Result<T>();
 		r.setSuccess(true);
+		r.setMessage("操作成功");
 		r.setCode(HttpStatus.OK.value());
 		r.setResult(data);
 		return r;
